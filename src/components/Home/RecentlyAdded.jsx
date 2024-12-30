@@ -25,7 +25,7 @@ const RecentlyAdded = () => {
                 <BookCard data={items} />
               </div>
             ))}
-            <Link to='/login' className='text-center mb-5'>click here to view All Books</Link>
+            <Link to='/all-books' className='text-center mb-5'>click here to view All Books</Link>
         </div>
 
         {/* <h4 className="text-center text-3xl mb-4">Our Collections</h4>

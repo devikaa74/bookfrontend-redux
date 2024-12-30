@@ -12,7 +12,7 @@ const Navbar = () => {
   const links = [
     { title: 'Home', link: '/' },
     { title: 'All Books', link: '/all-books' },
-    ...(isLoggedIn ? [{ title: 'Cart', link: '/cart' }] : []),
+    ...(isLoggedIn && role === 'user' ? [{ title: 'Cart', link: '/cart' }] : []),
     ...(isLoggedIn && role === 'user' ? [{ title: 'Profile', link: '/profile' }] : []),
     ...(isLoggedIn && role === 'admin' ? [{ title: 'Admin Profile', link: '/profile' }] : []),
   ];

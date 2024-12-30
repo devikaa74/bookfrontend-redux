@@ -26,15 +26,20 @@ const Cart = () => {
     fetchCart();
   }, []);
 
+
   // Calculate Total Amount
   useEffect(() => {
     if (Cart && Cart.length > 0) {
-      const total = Cart.reduce((sum, item) => sum + item.price, 0);
-      setTotal(total);
+      const total = Cart.reduce((sum, item) => {
+        const price = parseFloat(item.price) || 0; // Ensure price is a valid number
+        return sum + price;
+      }, 0);
+      setTotal(total.toFixed(2)); // Fix to 2 decimal places if dealing with floating-point numbers
     } else {
       setTotal(0); // Reset total if cart is empty
     }
   }, [Cart]);
+
 
   // Delete Item from Cart
   const deleteItem = async (bookid) => {
@@ -69,7 +74,7 @@ const Cart = () => {
   };
 
   return (
-    <div className="bg-zinc-900 px-12 lg:h-screen py-8">
+    <div className=" px-12 lg:h-screen py-8">
       {Cart.length === 0 ? (
         <div className="h-screen">
           <div className="h-[100%] flex items-center justify-center flex-col">

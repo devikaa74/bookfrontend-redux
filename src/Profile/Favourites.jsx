@@ -23,7 +23,7 @@ const Favourites = () => {
       }
     };
     fetch();
-  }, []); // Removed FavouriteBooks from dependency array to prevent infinite loop
+  }, [FavouriteBooks]); // Removed FavouriteBooks from dependency array to prevent infinite loop
 
   return (
     <div className="container py-5">

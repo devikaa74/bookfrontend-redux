@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import { Spinner } from 'react-bootstrap';
 import { FaCheck } from "react-icons/fa";
 import { IoOpenOutline } from "react-icons/io5";
-import { Link } from 'react-router-dom';
 import SeeUserData from './SeeUserData';
 
 const AllOrders = () => {
@@ -20,11 +19,16 @@ const AllOrders = () => {
 
     useEffect(() => {
         const fetch = async () => {
-            const response = await axios.get(
-                "http://localhost:1000/api/v1/get-all-orders",
-                { headers }
-            );
-            setAllOrders(response.data.data);
+            try {
+                const response = await axios.get(
+                    "http://localhost:1000/api/v1/get-all-orders",
+                    { headers }
+                );
+                setAllOrders(response.data.data);
+            } catch (error) {
+                console.error("Error fetching orders:", error);
+                alert("Failed to fetch orders. Please try again.");
+            }
         };
         fetch();
     }, []); // Empty dependency array to avoid infinite loop
@@ -35,14 +39,30 @@ const AllOrders = () => {
     };
 
     const submitChanges = async (i) => {
-        const id = AllOrders[i]._id;
-        const response = await axios.put(
-            `http://localhost:1000/api/v1/update-status/${id}`,
-            Values,
-            { headers }
-        );
-        alert(response.data.message);
-        setOptions(-1); // Reset options
+        try {
+            const id = AllOrders[i]._id;
+
+            // Make the API call to update the status
+            const response = await axios.put(
+                `http://localhost:1000/api/v1/update-status/${id}`,
+                Values,
+                { headers }
+            );
+
+            // Show success message
+            alert(response.data.message);
+
+            // Update the state locally
+            const updatedOrders = [...AllOrders];
+            updatedOrders[i].status = Values.status;
+            setAllOrders(updatedOrders);
+
+            // Reset dropdown
+            setOptions(-1);
+        } catch (error) {
+            console.error("Error updating status:", error);
+            alert("Failed to update status. Please try again.");
+        }
     };
 
     const trimmedOrders = AllOrders?.slice(0, -1); // Avoid mutating state
@@ -72,19 +92,18 @@ const AllOrders = () => {
                             </thead>
                             <tbody>
                                 {trimmedOrders.map((item, i) => (
-                                    <tr key={i}>
+                                    <tr key={item._id}>
                                         <td>{i + 1}</td>
-                                        <td>
-                                            
-                                                {item.book.title}
-                                            
-                                        </td>
+                                        <td>{item.book.title}</td>
                                         <td>{item.book.desc.slice(0, 50)}...</td>
                                         <td>Rs.{item.book.price}</td>
                                         <td>
                                             <button
                                                 className="btn btn-link p-0"
-                                                onClick={() => setOptions(i)}
+                                                onClick={() => {
+                                                    setOptions(i);
+                                                    setValues({ status: item.status }); // Ensure dropdown reflects the current status
+                                                }}
                                             >
                                                 {item.status === "order placed" ? (
                                                     <span className="text-warning">{item.status}</span>
@@ -141,11 +160,11 @@ const AllOrders = () => {
                 </>
             )}
             {userDivData && (
-              <SeeUserData
-                  userDivData={userDivData}
-                  userDiv={userDiv}
-                  setUserDiv={setUserDiv}
-              />
+                <SeeUserData
+                    userDivData={userDivData}
+                    userDiv={userDiv}
+                    setUserDiv={setUserDiv}
+                />
             )}
         </div>
     );

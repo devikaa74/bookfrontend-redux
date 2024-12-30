@@ -1,17 +1,15 @@
 import React, { useState } from 'react';
 import authImg from '../assets/authImg.jpg';
-import { Form, FloatingLabel } from 'react-bootstrap';
+import { Form, FloatingLabel, Spinner } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
-import { Spinner } from 'react-bootstrap';
 import axios from 'axios';
-
 
 const SignUp = () => {
   const [inputData, setInputData] = useState({
     username: '',
     email: '',
     password: '',
-    address:'',
+    address: '',
   });
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -25,30 +23,25 @@ const SignUp = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      if(
+      if (
         inputData.username === "" ||
         inputData.email === "" ||
         inputData.password === "" ||
-        inputData.address === "" 
-      ){
-        alert("All Fields Required")
-      }
-      else{
-        
+        inputData.address === ""
+      ) {
+        alert("All Fields Required");
+      } else {
         const response = await axios.post('http://localhost:1000/api/v1/sign-up', inputData);
         alert(response.data.message);
-        navigate("/LogIn")
-
+        navigate("/LogIn");
       }
-        // alert(response.data.message); // You can show a success message
-        // navigate('/login'); // Redirect to login after successful registration
-      } catch (error) {
-        console.error('Error registering:', error);
-        alert('Registration failed. Please try again.');
-      } finally {
-        setLoading(false); // Hide loading spinner after the request
-      }
-    };
+    } catch (error) {
+      console.error('Error registering:', error);
+      alert('Registration failed. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div style={{ minHeight: '100vh', width: '100%' }} className='d-flex justify-content-center align-items-center'>
@@ -62,17 +55,16 @@ const SignUp = () => {
               <h1 className='mt-2'><i className="fa-solid fa-book"> </i>Book Store</h1>
               <h5>SignUp to your Account</h5>
               <Form onSubmit={handleSubmit}>
-                
-                  <FloatingLabel controlId="floatingInputName" label="Username" className="mb-3">
-                    <Form.Control
-                      name="username"
-                      value={inputData.username}
-                      onChange={handleChange}
-                      type="text"
-                      placeholder="Username"
-                    />
-                  </FloatingLabel>
-                
+                <FloatingLabel controlId="floatingInputName" label="Username" className="mb-3">
+                  <Form.Control
+                    name="username"
+                    value={inputData.username}
+                    onChange={handleChange}
+                    type="text"
+                    placeholder="Username"
+                  />
+                </FloatingLabel>
+
                 <FloatingLabel controlId="floatingInput" label="Email address" className="mb-3">
                   <Form.Control
                     name="email"
@@ -82,6 +74,7 @@ const SignUp = () => {
                     placeholder="name@example.com"
                   />
                 </FloatingLabel>
+
                 <FloatingLabel controlId="floatingPassword" label="Password" className='mb-3'>
                   <Form.Control
                     name="password"
@@ -91,6 +84,7 @@ const SignUp = () => {
                     placeholder="Password"
                   />
                 </FloatingLabel>
+
                 <FloatingLabel controlId="floatingInput" label="Address" className='mb-3'>
                   <Form.Control
                     name="address"
@@ -102,19 +96,15 @@ const SignUp = () => {
                 </FloatingLabel>
 
                 <div className="mt-3">
-                  <button onClick={handleSubmit} className='btn btn-primary mb-2' type="submit" disabled={loading}>
+                  <button className='btn btn-primary mb-2' type="submit" disabled={loading}>
                     Register
                     {loading && <Spinner className='ms-2' animation="border" size="sm" variant="light" />}
                   </button>
                 </div>
 
                 <p>
-                  
-                     Already a User? Please Click Here to .
-                    
-                  <Link to='/login'>
-                     Login
-                  </Link>
+                  Already a User? Please Click Here to
+                  <Link to='/login'> Login</Link>
                 </p>
               </Form>
             </div>
