@@ -16,7 +16,7 @@ const ViewBookDetails = () => {
 
   useEffect(() => {
     const fetch = async () => {
-      const response = await axios.get(`http://localhost:1000/api/v1/get-book-by-id/${id}`);
+      const response = await axios.get(`https://bookbackend-redux.onrender.com/api/v1/get-book-by-id/${id}`);
       setData(response.data.data);
     };
     fetch();
@@ -28,16 +28,16 @@ const ViewBookDetails = () => {
     bookid:id,
   }
   const handleFavourite = async () => {
-    const response = await axios.put("http://localhost:1000/api/v1/add-book-to-favourite",{},{ headers })
+    const response = await axios.put("https://bookbackend-redux.onrender.com/api/v1/add-book-to-favourite",{},{ headers })
     alert(response.data.message);
   }
   const handleCart = async () => {
-    const response = await axios.put("http://localhost:1000/api/v1/add-to-cart",{},{ headers })
+    const response = await axios.put("https://bookbackend-redux.onrender.com/api/v1/add-to-cart",{},{ headers })
     alert(response.data.message);
   };
 
   const deleteBook = async ()=> {
-    const response = await axios.delete("http://localhost:1000/api/v1/delete-book",
+    const response = await axios.delete("https://bookbackend-redux.onrender.com/api/v1/delete-book",
       {headers}
     );
     alert(response.data.message);

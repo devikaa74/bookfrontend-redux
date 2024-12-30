@@ -21,7 +21,7 @@ const AllOrders = () => {
         const fetch = async () => {
             try {
                 const response = await axios.get(
-                    "http://localhost:1000/api/v1/get-all-orders",
+                    "https://bookbackend-redux.onrender.com/api/v1/get-all-orders",
                     { headers }
                 );
                 setAllOrders(response.data.data);
@@ -44,7 +44,7 @@ const AllOrders = () => {
 
             // Make the API call to update the status
             const response = await axios.put(
-                `http://localhost:1000/api/v1/update-status/${id}`,
+                `https://bookbackend-redux.onrender.com/api/v1/update-status/${id}`,
                 Values,
                 { headers }
             );

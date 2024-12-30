@@ -13,7 +13,7 @@ const Settings = () => {
     const fetch = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:1000/api/v1/get-user-information",
+          "https://bookbackend-redux.onrender.com/api/v1/get-user-information",
           { headers }
         );
         setProfileData(response.data); // Assuming response.data is the profile object
@@ -31,7 +31,7 @@ const Settings = () => {
   }
 
   const submitAddress = async () => {
-    const response = await axios.put("http://localhost:1000/api/v1/update-address",Value,
+    const response = await axios.put("https://bookbackend-redux.onrender.com/api/v1/update-address",Value,
       { headers }
     );
     alert(response.data.message);

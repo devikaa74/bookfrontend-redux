@@ -17,7 +17,7 @@ const Cart = () => {
   useEffect(() => {
     const fetchCart = async () => {
       try {
-        const res = await axios.get("http://localhost:1000/api/v1/get-user-cart", { headers });
+        const res = await axios.get("https://bookbackend-redux.onrender.com/api/v1/get-user-cart", { headers });
         setCart(res.data.data);
       } catch (error) {
         console.error("Error fetching cart:", error);
@@ -45,7 +45,7 @@ const Cart = () => {
   const deleteItem = async (bookid) => {
     try {
       const response = await axios.put(
-        `http://localhost:1000/api/v1/remove-from-cart/${bookid}`,
+        `https://bookbackend-redux.onrender.com/api/v1/remove-from-cart/${bookid}`,
         {},
         { headers }
       );
@@ -62,7 +62,7 @@ const Cart = () => {
   const PlaceOrder = async () => {
     try {
       const response = await axios.post(
-        `http://localhost:1000/api/v1/place-order`,
+        `https://bookbackend-redux.onrender.com/api/v1/place-order`,
         { order: Cart },
         { headers }
       );

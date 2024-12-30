@@ -12,7 +12,7 @@ const UserOrderHistory = () => {
     const fetch = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:1000/api/v1/get-order-history",
+          "https://bookbackend-redux.onrender.com/api/v1/get-order-history",
           {
             headers,
           }

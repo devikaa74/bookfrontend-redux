@@ -31,7 +31,7 @@ const SignUp = () => {
       ) {
         alert("All Fields Required");
       } else {
-        const response = await axios.post('http://localhost:1000/api/v1/sign-up', inputData);
+        const response = await axios.post('https://bookbackend-redux.onrender.com/api/v1/sign-up', inputData);
         alert(response.data.message);
         navigate("/LogIn");
       }

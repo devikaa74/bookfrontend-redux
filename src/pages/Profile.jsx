@@ -15,7 +15,7 @@ const Profile = () => {
     const fetch = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:1000/api/v1/get-user-information",
+          "https://bookbackend-redux.onrender.com/api/v1/get-user-information",
           { headers }
         );
         setProfile(response.data);
